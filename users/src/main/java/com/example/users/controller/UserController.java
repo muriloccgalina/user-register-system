@@ -51,7 +51,7 @@ public class UserController {
     public UserResponseDto delete(@RequestBody User data) {
         Optional<User> optionalUser = repository.findById(data.getId());
         User user = optionalUser.orElse(new User());
-        repository.deleteById(data.getId());
+        repository.deleteByUsername(data.getUsername());
         UserResponseDto response = new UserResponseDto(user);
         return response;
     }
