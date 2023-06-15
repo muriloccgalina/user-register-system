@@ -1,6 +1,11 @@
 export interface UserData {
     id?: number,
     name: string,
+    email: string,
     username: string,
-    gender: string
+    password:string,
+    phone?: number,
+    birthdate: number | string,
+    gender: string,
+    picture?: string
 }

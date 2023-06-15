@@ -2,15 +2,20 @@ import "./card.css";
 
 interface CardProps {
     name: string,
+    email: string,
     username: string,
-    gender: string
+    phone?: number,
+    gender: string,
+    picture?: string
 }
 
-export function Card({ name, username, gender}: CardProps) {
+export function Card({ name, username, email, phone, gender}: CardProps) {
     return(
         <div className="card">
-            <h2>{name}</h2>
-            <p>Username: {username}</p>
+            <h2>{username}</h2>
+            <p>Name: {name}</p>
+            <p>Email: {email}</p>
+            <p>Phone: {phone}</p>
             <p>Gender: {gender}</p>
         </div>
     )

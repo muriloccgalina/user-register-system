@@ -21,9 +21,12 @@ function App() {
         <div className="card-grid">
           {data?.map(userData => 
             <Card 
-              name={userData.name} 
+              name={userData.name}
+              email={userData.email}
               username={userData.username} 
+              phone={userData.phone}
               gender={userData.gender}  
+              picture={userData.picture}
             />
             )}
         </div>
