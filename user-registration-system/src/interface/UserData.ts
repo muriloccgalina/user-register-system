@@ -3,9 +3,9 @@ export interface UserData {
     name: string,
     email: string,
     username: string,
-    password:string,
-    phone?: number,
-    birthdate: number | string,
+    password: string,
+    phone?: number | string,
+    birthdate: any,
     gender: string,
     picture?: string
 }

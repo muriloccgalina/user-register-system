@@ -1,3 +1,9 @@
+.standard-input {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
 .modal-overlay {
     position: fixed;
     inset: 0;
@@ -13,9 +19,10 @@
 
 .modal-overlay .modal-body {
     background-color: white;
+    color: #242424;
     padding: 24px;
     height: 80%;
-    width: 60%;
+    width: 50%;
     border-radius: 24px;
     display: flex;
     align-items: flex-start;
@@ -32,21 +39,92 @@
     align-self: center;
 }
 
+.modal-overlay .modal-body label {
+    color: #242424;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 16px;
+}
+
 .modal-overlay .modal-body .input-container {
     width: calc(100% - 24px);
 }
 
-.modal-overlay .modal-body input {
+.modal-overlay .modal-body .text-inputs {
     background-color: white;
-    padding: 10px;
+    color: #242424;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    position: relative; 
+}
+
+.modal-overlay .modal-body .text-inputs input {
+    background-color: white;
+    padding: 8px 5px 8px 5px;
     border: 2px solid #c6c5c5c5;
     color: rgba(0, 0, 0, 0.9);
     font-size: 18px;
     line-height: 14px;
     border-radius: 12px;
     width: 100%;
+    margin-bottom: 8px;
+}
+
+.modal-overlay .modal-body .text-inputs .separete-inputs-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 25px;
+}
+
+.modal-overlay .modal-body .select-inputs {
+    width: 100%;
+    max-width: 100%;
+    padding: 0px;
+    display: inline-flex;
+    background-color: white;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 18px;
+}
+
+.modal-overlay .modal-body .select-inputs input {
+    background-color: white;
+    color: rgba(0, 0, 0, 0.9);
+    font-size: 18px;
+    border-radius: 12px;
+    width: 100%;
     margin-bottom: 14px;
 }
+
+.modal-overlay .modal-body .calendar-input {
+    flex-basis: 50%;
+}
+
+.modal-overlay .modal-body .calendar-input input {
+    padding: 10px 0px 10px 0px;
+    width: fit-content;
+    width: 100%;
+}
+
+.modal-overlay .modal-body .calendar-input select{
+    width: 99%;
+    padding: 5px;
+}
+
+.modal-overlay .modal-body .gender-select {
+    flex-basis: 50%;
+    width: 100%;
+    padding: 0;
+}
+
+.modal-overlay .modal-body .gender-select select {
+    background: rgb(255, 255, 255); 
+    width: 100%;
+    padding: 5px;
+    margin-top: 0px;
+}
+
 
 .modal-overlay .modal-body select {
     background-color: white;
@@ -56,25 +134,24 @@
     font-size: 18px;
     line-height: 24px;
     border-radius: 12px;
-    width: 15%;
+    width: 100%;
     height: 40px;
     margin-top: 15px;
     margin-left: 10px;
     box-sizing: border-box;
 }
 
-.modal-overlay .modal-body label {
-    color: #242424;
-    font-weight: 600;
-    margin-bottom: 8px;
-    font-size: 18px;
-}
-
 .modal-overlay .modal-body .btn-secondary {
     position: initial;
     width: 100%;
     margin-top: 26px;
-    color: #242424;
+    color: #000000;
+}
+
+.modal-overlay .modal-body .btn-secondary:hover {
+    background-color: #000bd6;
+    color: #ffffff;
+    transform: scale(1);
 }
 
 .modal-overlay .modal-body .btn-close {
@@ -89,9 +166,4 @@
     color: #242424;
     font-size: 18px;
     cursor: pointer;
-}
-
-.modal-overlay .modal-body .btn-secondary:hover {
-    background-color: #3a44f8;
-    transform: scale(1);
 }

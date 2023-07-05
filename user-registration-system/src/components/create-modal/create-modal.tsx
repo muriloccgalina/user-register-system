@@ -2,58 +2,13 @@ import { useEffect, useState, ChangeEvent } from "react"
 import { useUserDataMutate } from "../../hooks/useUserDataMutate";
 import { UserData } from "../../interface/UserData";
 
-import * as functions from "../../functions.tsx";
+import * as functions from "../../models/functions.tsx";
+import * as models from "../../models/models.tsx";
 
 import "./modal.css"
 
-interface InputProps {
-    label: string,
-    value: number | string,
-    updateValue(value: any): void
-}
-
 interface ModalProps {
     closeModal(): void
-}
-
-const Input = ({ label, value, updateValue}: InputProps) => {
-    return(
-        <>
-            <label>{label}</label>
-            <input value={value} onChange={e => updateValue(e.target.value)} />
-        </>
-    )
-}
-
-const NumberInput = ({ label, value, updateValue }: InputProps) => {
-    const NumberVerification = (event: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = event.target.value;
-        const numericValue = inputValue.replace(/\D/g, "");
-        updateValue(numericValue);
-    };
-
-    return (
-        <>
-            <label>{label}</label>
-            <input value={value} onChange={NumberVerification} />
-        </>
-    );
-}
-
-const Select = ({label, updateValue}: InputProps) => {
-    return(
-        <>
-            <label>{label}</label>
-            <select
-            onChange={e => updateValue(e.target.value)}>
-                <option value=""/>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
-                <option value="nonbinary">Non-binary</option>
-                <option value="others">Others</option>
-            </select>
-        </>
-    )
 }
 
 export function CreateModal({closeModal}: ModalProps ){
@@ -63,7 +18,7 @@ export function CreateModal({closeModal}: ModalProps ){
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
-    const [birthdate, setBirthdate] = useState("");
+    const [birthdate, setBirthdate] = useState(new Date());
     const [picture, setPicture] = useState("");
     const {mutate, isSuccess, isLoading} = useUserDataMutate();
 
@@ -96,15 +51,24 @@ export function CreateModal({closeModal}: ModalProps ){
     return(
         <div className="modal-overlay">
             <div className="modal-body">
-            <button onClick={closeModal} className="btn-close">X</button>
+                <button onClick={closeModal} className="btn-close">X</button>
                 <h2>Register a new user!</h2>
                 <form className="input-container">
-                    <Input label="Name" value={name} updateValue={setName}/>
-                    <Input label="Username" value={username} updateValue={setUsername}/>
-                    <Input label="Email" value={email} updateValue={setEmail}/>
-                    <NumberInput label="Phone" value={phone} updateValue={setPhone}/>
-                    <Input label="Password" value={password} updateValue={setPassword}/>
-                    <Select label="Gender" value="" updateValue={setGender}/>
+                    <div className="text-inputs">
+                        <div className="separete-inputs-grid">
+                            <models.Input label="Name" value={name} updateValue={setName}/>
+                            <models.NumberInput label="Phone" value={phone} updateValue={setPhone}/>
+                        </div>
+                        <models.Input label="Email" value={email} updateValue={setEmail}/>
+                        <div className="separete-inputs-grid">
+                            <models.Input label="Username" value={username} updateValue={setUsername}/>
+                            <models.Input label="Password" value={password} updateValue={setPassword}/>
+                        </div>
+                    </div>
+                    <div className="select-inputs">
+                        <models.CalendarInput label="Birth Date" value={birthdate} updateValue={setBirthdate}/>
+                        <models.Select className="gender-select" label="Gender" value="" updateValue={setGender}/>
+                    </div>
                 </form>
                 <button onClick={submit} className="btn-secondary">
                     {isLoading ? "Registering..." : "Register"}
