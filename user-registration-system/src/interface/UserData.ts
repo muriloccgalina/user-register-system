@@ -5,7 +5,7 @@ export interface UserData {
     username: string,
     password: string,
     phone?: number | string,
-    birthdate: any,
+    birthdate: String,
     gender: string,
     picture?: string
 }

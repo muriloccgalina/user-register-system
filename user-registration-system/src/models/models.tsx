@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import DatePicker from "react-datepicker";
+import InputMask from 'react-input-mask';
 import "react-datepicker/dist/react-datepicker.css";
+import { parse, format } from 'date-fns';
 
 interface InputProps {
   label: string;
   value: any | Date;
+  type?: string;
   updateValue(value: any | Date): void;
+  placeholder?: string;
+  mask?: string;
+  className: any;
 }
 
 interface CalendarInputProps {
     label: string;
-    value: Date;
-    updateValue: (date: Date) => void;
+    value: Date | string | null;
+    updateValue: (any: any) => void;
 }
 
 interface SelectProps {
@@ -22,16 +28,64 @@ interface SelectProps {
 
 }
 
-export const Input = ({ label, value, updateValue }: InputProps) => {
+export const Input = ({ label, value, type, placeholder, mask, className, updateValue }: InputProps) => {
   return (
-    <div className='standard-input'>
+    <div className={className}>
       <label>{label}</label>
-      <input value={value} onChange={(e) => updateValue(e.target.value)} />
+      {mask ? (
+        <InputMask
+          mask={mask}
+          placeholder={placeholder}
+          type={type}
+          value={value} 
+          onChange={(e) => updateValue(e.target.value)} 
+        />
+      ) : (
+        <input
+        placeholder={placeholder}
+        type={type} 
+        value={value} 
+        onChange={(e) => updateValue(e.target.value)} 
+        />
+      )}
     </div>
   );
 };
 
-export const NumberInput = ({ label, value, updateValue }: InputProps) => {
+export const DateInput = ({ label, value, placeholder, className, mask, updateValue }: InputProps) => {
+
+  const NumberVerification = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = event.target.value;
+    const numericValue = rawValue.replace(/\D/g, "");
+
+    // const formattedValue = numericValue.replace(/^(\d{2})(\d{2})(\d{4})$/, "$1/$2/$3");
+
+    updateValue(numericValue);
+  };
+
+  return (
+    <div className={className}>
+      <label>{label}</label>
+      {mask ? (
+        <InputMask
+          mask={mask}
+          placeholder={placeholder}
+          value={value} 
+          onChange={(e) => updateValue(e.target.value)} 
+        />
+      ) : (
+        <input
+        placeholder={placeholder}
+        maxLength={placeholder ? placeholder.length : undefined}
+        value={value} 
+        onChange={NumberVerification} 
+        />
+      )}
+    </div>
+  );
+};
+
+export const NumberInput = ({ label, value, mask, placeholder, className, updateValue }: InputProps) => {
   const NumberVerification = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     const numericValue = inputValue.replace(/\D/g, '');
@@ -39,9 +93,22 @@ export const NumberInput = ({ label, value, updateValue }: InputProps) => {
   };
 
   return (
-    <div className='standard-input'>
+    <div className={className}>
       <label>{label}</label>
-      <input value={value} onChange={NumberVerification} />
+      {mask ? (
+        <InputMask
+          placeholder={placeholder}
+          mask={mask}
+          value={value} 
+          onChange={NumberVerification} 
+        />
+      ) : (
+        <input
+        placeholder={placeholder}
+        value={value} 
+        onChange={NumberVerification} 
+        />
+      )}
     </div>
   );
 };
@@ -61,17 +128,28 @@ export const Select = ({ label, updateValue, className}: SelectProps) => {
   );
 };
 
-export const CalendarInput: React.FC<CalendarInputProps> = ({
+export const DatePickerInput: React.FC<CalendarInputProps> = ({
     label,
     value,
     updateValue,
   }) => {
+    const [birthdate, updateBirthDate] = useState< Date | null>(null);
+
+    const handleDateChange = (selectedDate: Date | null) => {
+      if (selectedDate) {
+        const formattedDate = format(selectedDate, "yyyy-MM-dd");
+        const parsedDate = parse(formattedDate, "yyyy-MM-dd", new Date());
+        updateValue(parsedDate);
+        updateBirthDate(parsedDate);
+      }
+    };
     return (
       <div className="calendar-input">
         <label>{label}</label>
         <DatePicker
-          selected={value}
-          onChange={(date: any) => updateValue(date)}
+          selected={birthdate}
+          placeholderText='00/00/0000'
+          onChange={handleDateChange}
           dateFormat="dd/MM/yyyy"
           showMonthDropdown
           showYearDropdown

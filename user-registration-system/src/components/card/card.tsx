@@ -4,7 +4,7 @@ interface CardProps {
     name: string,
     email: string,
     username: string,
-    phone?: number,
+    phone?: number | string,
     gender: string,
     picture?: string
 }
