@@ -31,6 +31,8 @@ export function CreateModal({closeModal}: ModalProps ){
         if(functions.EmailCheck(email)) return;
         if(!functions.ValidatePhoneNumber(phone)) return;
         const encryptedPassword = await functions.EncryptPassword(password);
+        const birthdateFormatted = await functions.DateFormatter(birthdate);
+        
         const userData: UserData = {
             name,
             username,
@@ -38,7 +40,7 @@ export function CreateModal({closeModal}: ModalProps ){
             phone,
             gender,
             password: encryptedPassword,
-            birthdate,
+            birthdate: birthdateFormatted,
             picture
         }
         try {
@@ -77,7 +79,7 @@ export function CreateModal({closeModal}: ModalProps ){
                     </div>
                     <div className="select-inputs">
                         <models.DateInput className="calendar-input" label="Birth Date" value={birthdate} updateValue={setBirthdate} mask="99/99/9999" placeholder="dd/mm/yyyy"/>
-                        <models.Select className="gender-select" label="Gender" value="" updateValue={setGender}/>
+                        <models.Select className="gender-select" label="Gender" value={gender} updateValue={setGender}/>
                     </div>
                 </form>
                 <button onClick={submit} className="btn-secondary">

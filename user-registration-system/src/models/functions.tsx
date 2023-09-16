@@ -1,4 +1,5 @@
 //import crypto from 'crypto';
+import { ZonedDateTime, DateTimeFormatter } from 'js-joda';
 
 //Check if is empty
 export function EmptyCheck(data: any[], names: string[]): boolean {
@@ -91,5 +92,21 @@ export function ValidatePhoneNumber(phoneNumber: string): boolean {
   return true;
 }
 
+//Converts a string date to a Date object
+export function DateFormatter(date: String): Date {
+  const parts = date.split("/"); 
+
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10) - 1;
+  const year = parseInt(parts[2], 10);
+  return new Date(year, month, day);
+}
+
+//Converts a string zonedDate to a string Date
+export function ZoneDateToDate(dateString: string): string {
+  const zonedDateTime = ZonedDateTime.parse(dateString);
+  const formatter = DateTimeFormatter.ofPattern('dd/MM/yyyy');
+  return zonedDateTime.format(formatter);
+}
 
 

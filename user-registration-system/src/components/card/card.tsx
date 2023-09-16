@@ -6,12 +6,13 @@ interface CardProps {
     username: string,
     phone?: number | string,
     gender: string,
-    picture?: string
+    picture?: string,
+    func: () => void;
 }
 
-export function Card({ name, username, email, phone, gender}: CardProps) {
+export function Card({ name, username, email, phone, gender, func}: CardProps) {
     return(
-        <div className="card">
+        <div className="card" onClick={func}>
             <h2>{username}</h2>
             <p>Name: {name}</p>
             <p>Email: {email}</p>

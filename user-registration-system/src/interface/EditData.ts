@@ -1,10 +1,9 @@
-export interface UserData {
-    id?: number,
+export interface EditData {
+    id: number,
     name: string,
     email: string,
     username: string,
-    password: string,
-    phone?: number | string,
+    phone?: string,
     birthdate: Date,
     gender: string,
     picture?: string

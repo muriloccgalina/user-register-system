@@ -7,6 +7,7 @@ import { parse, format } from 'date-fns';
 interface InputProps {
   label: string;
   value: any | Date;
+  id?: string;
   type?: string;
   updateValue(value: any | Date): void;
   placeholder?: string;
@@ -24,13 +25,14 @@ interface SelectProps {
     label: string;
     value: string;
     className: any;
+    id?: string;
     updateValue(value: any): void;
 
 }
 
-export const Input = ({ label, value, type, placeholder, mask, className, updateValue }: InputProps) => {
+export const Input = ({ label, value, id, type, placeholder, mask, className, updateValue }: InputProps) => {
   return (
-    <div className={className}>
+    <div className={className} id={id}>
       <label>{label}</label>
       {mask ? (
         <InputMask
@@ -42,17 +44,17 @@ export const Input = ({ label, value, type, placeholder, mask, className, update
         />
       ) : (
         <input
-        placeholder={placeholder}
-        type={type} 
-        value={value} 
-        onChange={(e) => updateValue(e.target.value)} 
+          placeholder={placeholder}
+          type={type} 
+          value={value} 
+          onChange={(e) => updateValue(e.target.value)} 
         />
       )}
     </div>
   );
 };
 
-export const DateInput = ({ label, value, placeholder, className, mask, updateValue }: InputProps) => {
+export const DateInput = ({ label, value, id, placeholder, className, mask, updateValue }: InputProps) => {
 
   const NumberVerification = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = event.target.value;
@@ -64,7 +66,7 @@ export const DateInput = ({ label, value, placeholder, className, mask, updateVa
   };
 
   return (
-    <div className={className}>
+    <div className={className} id={id}>
       <label>{label}</label>
       {mask ? (
         <InputMask
@@ -75,17 +77,17 @@ export const DateInput = ({ label, value, placeholder, className, mask, updateVa
         />
       ) : (
         <input
-        placeholder={placeholder}
-        maxLength={placeholder ? placeholder.length : undefined}
-        value={value} 
-        onChange={NumberVerification} 
+          placeholder={placeholder}
+          maxLength={placeholder ? placeholder.length : undefined}
+          value={value} 
+          onChange={NumberVerification} 
         />
       )}
     </div>
   );
 };
 
-export const NumberInput = ({ label, value, mask, placeholder, className, updateValue }: InputProps) => {
+export const NumberInput = ({ label, value, id, mask, placeholder, className, updateValue }: InputProps) => {
   const NumberVerification = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     const numericValue = inputValue.replace(/\D/g, '');
@@ -93,7 +95,7 @@ export const NumberInput = ({ label, value, mask, placeholder, className, update
   };
 
   return (
-    <div className={className}>
+    <div className={className} id={id}>
       <label>{label}</label>
       {mask ? (
         <InputMask
@@ -104,20 +106,20 @@ export const NumberInput = ({ label, value, mask, placeholder, className, update
         />
       ) : (
         <input
-        placeholder={placeholder}
-        value={value} 
-        onChange={NumberVerification} 
+          placeholder={placeholder}
+          value={value} 
+          onChange={NumberVerification} 
         />
       )}
     </div>
   );
 };
 
-export const Select = ({ label, updateValue, className}: SelectProps) => {
+export const Select = ({ label, updateValue, id, className, value}: SelectProps) => {
   return (
-    <div className={`${className}`}>
+    <div className={`${className}`} id={id}>
       <label>{label}</label>
-      <select onChange={(e) => updateValue(e.target.value)}>
+      <select onChange={(e) => updateValue(e.target.value)} value={value}>
         <option value="" />
         <option value="male">Male</option>
         <option value="female">Female</option>

@@ -4,7 +4,7 @@ import { useQueries, useQuery } from "@tanstack/react-query";
 
 const API_URL = 'http://localhost:8080'
 
-const fetchData =async (): AxiosPromise<UserData[]> => {
+const fetchData = async (): AxiosPromise<UserData[]> => {
     const response = axios.get( API_URL + "/user");
     return response;
 }
@@ -12,8 +12,7 @@ const fetchData =async (): AxiosPromise<UserData[]> => {
 export function useUserData() {
     const query = useQuery({
         queryFn: fetchData,
-        queryKey: ['user-data'],
-        retry: 2
+        queryKey: ['user-data']
     })
 
     return {
